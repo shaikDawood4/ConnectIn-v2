@@ -11,36 +11,48 @@ export default function DiscoverPage() {
 
     const authState = useSelector((state) => state.auth)
     const dispatch = useDispatch();
-    useEffect(()=>{
-        if(!authState.all_profiles_fetched){
+    useEffect(() => {
+        if (!authState.all_profiles_fetched) {
             dispatch(getAllUsers())
         }
-    },[])
+    }, [])
 
-const router = useRouter();
+    const router = useRouter();
 
-  return (
-   <UserLayout>
+    return (
+        <UserLayout>
             <DashboardLayout>
                 <div>
                     <h1>Discover</h1>
                     <div className={styles.allUserProfile}>
-                        {authState.all_profiles_fetched && authState.all_users.map((user)=>{
-                            return (
-                                <div onClick={()=>{
-                                    router.push(`/view_profile/${user.userId.username}`)
-                                }} key={user._id} className={styles.userCard}>
-                                    <img className={styles.userCard_image} src={`${BASE_URL}/${user.userId.profilePicture}`} alt="" />
-                                    <div>
-                                    <h1>{user.userId.name}</h1>
-                                    <p>@{user.userId.username}</p>
-                                    </div>
-                                </div>
-                            )
-                        })}
+                        {authState.all_profiles_fetched && authState.user?.userId && (
+                            authState.all_users
+                                .filter((user) => user?.userId?._id !== authState.user.userId._id)
+                                .map((user) => {
+                                    return (
+                                        <div
+                                            key={user._id}
+                                            onClick={() => {
+                                                router.push(`/view_profile/${user.userId.username}`);
+                                            }}
+                                            className={styles.userCard}
+                                        >
+                                            <img
+                                                className={styles.userCard_image}
+                                                src={`${BASE_URL}/${user?.userId?.profilePicture}`}
+                                                onError={(e) => (e.target.src = "/default.png")}
+                                            />
+                                            <div>
+                                                <h1>{user?.userId?.name}</h1>
+                                                <p>@{user?.userId?.username}</p>
+                                            </div>
+                                        </div>
+                                    );
+                                })
+                        )}
                     </div>
                 </div>
             </DashboardLayout>
         </UserLayout>
-  )
+    )
 }
