@@ -17,7 +17,7 @@ export const  createPost= async(req,res)=>{
     if(!user) return res.status(404).json({message : "user not found"});
     
 
-    //what the hell is going on 
+   
     const post = new Post({
         userId : user._id,
         body : req.body.body,
