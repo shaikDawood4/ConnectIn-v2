@@ -11,12 +11,7 @@ export default function DashboardLayout({ children }) {
   const authState = useSelector((state) => state.auth)
   const dispatch = useDispatch();
 
-  useEffect(() => {
-    if (localStorage.getItem("token") === null) {
-      router.push("/login");
-    }
-    dispatch(setTokenIsThere());
-  }, []);
+ 
 
   
   useEffect(() => {
@@ -66,7 +61,7 @@ export default function DashboardLayout({ children }) {
           {authState.all_users?.map((profile) => {
             return (
               <div key={profile._id} className={styles.extraContainer_profile}>
-                <img src={profile.userId.profile_pic} alt="" />
+                <img src={profile.userId.profilePicture} alt="" />
                 <p>{profile.userId.name}</p>
               </div>
             )
