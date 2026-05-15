@@ -38,10 +38,31 @@ export default function LoginComponent() {
     dispatch(emptyMessage());  //whenever we want to invoke any action, we need to use dispatch 
   },[userLoginMethod])
 
-  const handleRegister = () => {
-    dispatch(registerUser({ username, password, email, name }));
 
-  }
+const handleRegister = async () => {
+
+   const response = await dispatch(
+      registerUser({
+         username,
+         password,
+         email,
+         name
+      })
+   );
+
+   console.log(response.payload)
+
+   if(response.payload?.token){
+
+      localStorage.setItem(
+         "token",
+         response.payload.token
+      );
+
+      router.push("/dashboard");
+   }
+
+}
 
   const handleLogin = () =>{
      dispatch(loginUser({email, password }));

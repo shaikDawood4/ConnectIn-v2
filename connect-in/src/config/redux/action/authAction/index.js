@@ -19,7 +19,7 @@ export const loginUser = createAsyncThunk(
                 })
             }
 
-            return thunkAPI.fulfillWithValue(response.data.token);   ///kinda action hai and ye humara payload 
+            return thunkAPI.fulfillWithValue(response.data);   ///kinda action hai and ye humara payload 
         }catch(err){
             return thunkAPI.rejectWithValue(err.response?.data?.message  || "Something went wrong") ;  // if reponse hai tho if data hai tho ? uske undar message.
         }
@@ -37,6 +37,8 @@ export const registerUser = createAsyncThunk(
             name:user.name
             
          })
+         console.log(request.data);
+         
           return thunkAPI.fulfillWithValue(request.data);
         }catch(err){
             return thunkAPI.rejectWithValue(err.response?.data?.message || "Something went wrong")

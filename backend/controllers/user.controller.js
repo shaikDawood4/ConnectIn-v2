@@ -36,31 +36,64 @@ return outputPath;
 
 export const registerUser = async (req,res)=>{
     try {
+
         const {name ,email, username, password} = req.body;
 
         if(!name || !email || !username || !password) {
-            return res.status(400).json({message : "All fields are required"});
+            return res.status(400).json({
+                message : "All fields are required"
+            });
         }
 
         const user = await User.findOne({email});
-        if(user) return res.status(400).json({message : "user already exists"});
+
+        if(user){
+            return res.status(400).json({
+                message : "user already exists"
+            });
+        }
 
         const hashedPassword = await bcrypt.hash(password, 10);
+
         const newUser = new User({
-            email,username, name, password : hashedPassword
-        })
+            email,
+            username,
+            name,
+            password : hashedPassword
+        });
 
         await newUser.save();
 
         const newProfile = new Profile({
             userId : newUser._id
-        })
+        });
 
         await newProfile.save();
-        return res.status(200).json({message : "User created successfully "});
+
+        // TOKEN
+
+        const token = crypto.randomBytes(32).toString('hex');
+
+        // SAVE TOKEN
+
+        await User.updateOne(
+            {_id : newUser._id},
+            {token}
+        );
+
+        // SEND TOKEN
+        console.log(token);
+        return res.status(200).json({
+            message : "User created successfully",
+            token
+        });
 
     }catch(err){
-        return res.json({message : err.message})
+
+        return res.status(500).json({
+            message : err.message
+        });
+
     }
 }
 
