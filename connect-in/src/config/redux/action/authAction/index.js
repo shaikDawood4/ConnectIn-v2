@@ -37,7 +37,7 @@ export const registerUser = createAsyncThunk(
             name:user.name
             
          })
-         console.log(request.data);
+         
          
           return thunkAPI.fulfillWithValue(request.data);
         }catch(err){

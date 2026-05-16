@@ -5,6 +5,7 @@ import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import styles from "./index.module.css";
 import { setTokenIsThere } from '@/config/redux/reducer/authReducer';
+import { BASE_URL } from '@/config';
 
 export default function DashboardLayout({ children }) {
   const router = useRouter();
@@ -60,8 +61,8 @@ export default function DashboardLayout({ children }) {
           <h3>Top Profiles</h3>
           {authState.all_users?.map((profile) => {
             return (
-              <div key={profile._id} className={styles.extraContainer_profile}>
-                <img src={profile.userId.profilePicture} alt="" />
+              <div style={{display:"flex", margin:"0.5rem"}} key={profile._id} className={styles.extraContainer_profile}>
+                <img style={{height:"1.5rem", width:"1.5rem", marginRight:"1rem", borderRadius:"50%"}} src={`${BASE_URL}/${profile.userId.profilePicture}`} alt="" />
                 <p>{profile.userId.name}</p>
               </div>
             )

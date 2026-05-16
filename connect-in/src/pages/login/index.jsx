@@ -50,7 +50,7 @@ const handleRegister = async () => {
       })
    );
 
-   console.log(response.payload)
+   
 
    if(response.payload?.token){
 

@@ -17,6 +17,7 @@ app.use(userRoutes);
 
 app.use(express.static("uploads"))
 
+
 const start = async ()=>{
     const connectDb = await mongoose.connect(process.env.MONGO_URI);
 

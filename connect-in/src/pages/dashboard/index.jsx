@@ -57,6 +57,7 @@ export default function Dashboard({ children }) {
                         <div className={styles.wrapper}>
                             <div className={styles.createPostContainer}>
                                 <img className={styles.userProfile} src={`${BASE_URL}/${authState.user?.userId?.profilePicture}`} alt="" />
+                                
                                 <textarea onChange={(e) => {
                                     setPostContent(e.target.value);
                                 }} value={postContent} placeholder={"What's in your mind ? "} className={styles.textAreaContent} name="" id=""></textarea>
