@@ -74,7 +74,13 @@ export default function Dashboard({ children }) {
                                 </label>
                                 <input onChange={(e) => {
                                     setFileContent(e.target.files[0])
+                                    
                                 }} type="file" hidden id='fileUpload' />
+                                {fileContent && (
+                                                  <p className={styles.selectedFile}>
+                                                    Selected file: {fileContent.name}
+                                                         </p>
+                                                 )}
                                 {postContent.length > 0 && <div onClick={handleUpload} className={styles.uploadButton}> Post</div>}
                             </div>
 
