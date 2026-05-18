@@ -121,7 +121,7 @@ export default function ProfilePage() {
 
 
                   <div>
-                    <textarea onChange={(e) => setUserProfile({ ...userProfile, bio: e.target.value })} value={userProfile.bio} style={{ width: "100%" }} rows={Math.max(3, Math.ceil(userProfile.bio.length / 80))} id=""></textarea>
+                    <textarea placeholder='Write your bio' onChange={(e) => setUserProfile({ ...userProfile, bio: e.target.value })} value={userProfile.bio} style={{ width: "100%" , border:'1px solid black'}} rows={Math.max(3, Math.ceil(userProfile.bio.length / 80))} id=""></textarea>
                   </div>
 
                   <div style={{ flex: "0.2" }}>
