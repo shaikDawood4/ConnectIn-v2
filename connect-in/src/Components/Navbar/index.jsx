@@ -59,7 +59,7 @@ const searchedProfile = (username)=>{
 
 
 
-             {/* {/Todo-> SearchUser/} */}
+             
              
            {!isExcludedPage &&  <div className={styles.searchBox}>
                 <input type="text" placeholder=' Search' onChange={(e)=>{setSearchName(e.target.value)}} />
@@ -79,7 +79,7 @@ const searchedProfile = (username)=>{
             </div>}
 
 
-            {/* ********************************************************* */}
+           
 
 
 
