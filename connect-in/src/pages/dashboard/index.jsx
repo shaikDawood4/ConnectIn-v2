@@ -45,6 +45,7 @@ export default function Dashboard({ children }) {
 
         if (token) {
             dispatch(getAllPosts())
+             dispatch(getAllUsers())
             dispatch(getAboutUser({ token }))
         }
     }, [])

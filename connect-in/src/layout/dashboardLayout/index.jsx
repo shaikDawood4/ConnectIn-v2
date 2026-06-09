@@ -61,7 +61,7 @@ export default function DashboardLayout({ children }) {
           <h3>Top Profiles</h3>
           {authState.all_users?.map((profile) => {
             return (
-              <div style={{display:"flex", margin:"0.5rem"}} key={profile._id} className={styles.extraContainer_profile}>
+              <div onClick={()=>{router.push(`/view_profile/${profile.userId.name}`)}} style={{display:"flex",cursor:"pointer", margin:"0.5rem"}} key={profile._id} className={styles.extraContainer_profile}>
                 <img style={{height:"1.5rem", width:"1.5rem", marginRight:"1rem", borderRadius:"50%"}} src={`${BASE_URL}/${profile.userId.profilePicture}`} alt="" />
                 <p>{profile.userId.name}</p>
               </div>

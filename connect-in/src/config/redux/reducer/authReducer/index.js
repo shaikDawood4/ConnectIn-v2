@@ -2,7 +2,7 @@
 
 
 import { createSlice } from "@reduxjs/toolkit"
-import { getAboutUser, getAllUsers, getConnectionsRequest, getMyconnectionRequests, loginUser,registerUser } from "../../action/authAction"
+import { getAboutUser, getAllUsers, getConnectionsRequest, getMyconnectionRequests, loginUser,registerUser, searchUser } from "../../action/authAction"
 
 //1
 const initialState = {
@@ -17,6 +17,8 @@ const initialState = {
     connections : [],
     connectionRequest : [],
     all_users : [],
+    searchedUsers : [],
+    searchedUser : false,
     all_profiles_fetched: false
 }
 
@@ -38,7 +40,10 @@ const authSlice = createSlice({
         },
         setTokenIsNotThere : (state)=>{
             state.isTokenThere = false
-        }
+        },
+        clearSearchedUsers : (state)=>{
+           state.searchedUsers = []
+}
     },
     extraReducers :(builder)=>{
         builder
@@ -102,10 +107,25 @@ const authSlice = createSlice({
         .addCase(getMyconnectionRequests.rejected, (state,action)=>{
             state.message = action.payload
         })
+        .addCase(searchUser.fulfilled,(state,action)=>{
+            state.searchedUsers = action.payload.userProfiles;
+            state.searchedUser = true
+            state.isLoading = false;
+        })
+        .addCase(searchUser.pending, (state)=>{
+            state.isLoading = true;
+            state.searchedUser = true
+            state.message = "searching..."
+        })
+        .addCase(searchUser.rejected, (state,action)=>{
+            state.message = action.payload
+            state.searchedUser = true
+            state.isLoading = false;
+        })
     }
 })
 
-export const {reset,emptyMessage, setTokenIsThere, setTokenIsNotThere} = authSlice.actions  // what are we even doing ? 
+export const {reset,emptyMessage, setTokenIsThere, setTokenIsNotThere,clearSearchedUsers} = authSlice.actions  // what are we even doing ? 
 
 
 export default authSlice.reducer // authSlice ke undar ka mamlaaaa

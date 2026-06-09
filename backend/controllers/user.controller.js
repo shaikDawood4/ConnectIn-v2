@@ -385,3 +385,49 @@ export const getUserProfileAndUserBasedOnUsername = async(req,res)=>{
         return res.status(500).json({message : err.message})
     }
 }
+
+export const findUser = async (req, res) => {
+
+    try {
+
+        const { name } = req.query;
+
+        // find matching users
+        const users = await User.find({
+            name: {
+                $regex: name,
+                $options: "i"
+            }
+        });
+
+        // extract user ids
+        const userIds = users.map((user) => user._id);
+
+        // find profiles using those ids
+        const userProfiles = await Profile.find({
+            userId: {
+                $in: userIds
+            }
+        }).populate('userId', 'name username email profilePicture');
+
+        // no users found
+        if (userProfiles.length === 0) {
+            return res.status(404).json({
+                message: "user not found"
+            });
+        }
+
+        return res.status(200).json({
+            userProfiles
+        });
+
+    }
+    catch (err) {
+
+        return res.status(500).json({
+            message: err.message
+        });
+
+    }
+
+}

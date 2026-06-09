@@ -8,13 +8,16 @@ import styles from "./index.module.css";
 import { BASE_URL, clientServer } from '@/config'
 import { getAllPosts } from '@/config/redux/action/postAction'
 import { current } from '@reduxjs/toolkit'
+
+
 export default function ProfilePage() {
+
   const postReducer = useSelector((state) => state.postReducer)
   const authState = useSelector((state) => state.auth);
+
   const [userProfile, setUserProfile] = useState({});
   const [userPost, setUserPosts] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false)
-
   const [inputData, setInputData] = useState({company:"", position:"", years:""})
 
   const handleWorkInputChange = async(e)=>{
@@ -24,6 +27,9 @@ export default function ProfilePage() {
 
 
   const dispatch = useDispatch();
+
+
+  
   useEffect(() => {
     dispatch(getAboutUser({ token: localStorage.getItem("token") }));
     dispatch(getAllPosts({ token: localStorage.getItem("token") }));

@@ -147,3 +147,20 @@ export const AcceptConnection = createAsyncThunk(
         }
     }
 )
+
+export const searchUser = createAsyncThunk(
+    "/user/findUser",
+    async(user, thunkAPI)=>{
+       try{
+         const response = await clientServer.get("/user/findUser", {
+    params: {
+        name: user.name
+    }
+})
+        return thunkAPI.fulfillWithValue(response.data);
+       }
+       catch(Err){
+        return thunkAPI.rejectWithValue(Err.response.data.message);
+       }
+    }
+)
